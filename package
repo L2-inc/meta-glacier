@@ -1,0 +1,25 @@
+if [ -z $1 ];
+then
+	echo need version
+	exit
+fi
+v=$1
+f=meta-glacier-$1
+d=/tmp/$f
+mkdir $d
+ant -q clean
+if [ $? -ne 0 ];
+then
+	echo non zero exit status from 'ant clean'
+	exit
+fi
+ant -q jar
+if [ $? -ne 0 ];
+then
+	echo non zero exit status from 'ant jar'
+	exit
+fi
+rsync --delete -r dist/ $d/
+cd /tmp
+zip -r $f.zip $f
+echo $f
