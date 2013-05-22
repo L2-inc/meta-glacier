@@ -99,6 +99,7 @@ public class FileProgressPanel extends JPanel implements FileProgressReporter{
         last_position = current_pos;
         updateTotalSize(current_pos);
     }
+    
     void resetRate(String t){
         if (t != null) {
             rateText.setText(t);
@@ -109,8 +110,7 @@ public class FileProgressPanel extends JPanel implements FileProgressReporter{
             rateText.setText(s);
         }
     }
-
-
+    
     public void reInitCurrentFilePb(String fn, String size) {
         String label = fn;
 
