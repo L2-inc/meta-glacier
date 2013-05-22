@@ -20,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ class UploadThread extends Thread{
     private final static Logger LGR = Main.getLogger(UploadThread.class);
 
     private HashMap<String, ArrayList<String>> filesToMove;
+    private HashMap<String, File> filesToRemove = new HashMap<>();
     private HashMap<String, String> fileDesc;
     private ArrayList<File> fileList;
     private long totalSize = 0;
@@ -144,6 +146,15 @@ class UploadThread extends Thread{
             upload_dialog.setCurrentTotalSize(currentTotalSize);
             //</editor-fold>
             
+            if (filesToRemove.containsKey(path)) {
+                LGR.log(Level.INFO, "deleting file {0}", path);
+                Path p = Paths.get(path);
+                try {
+                    Files.delete(p);
+                } catch (IOException ex) {
+                    LGR.log(Level.SEVERE, null, ex);
+                }
+            }
             if (moveDir == null || moveDir.isEmpty()) {
                 continue;
             }
@@ -176,6 +187,10 @@ class UploadThread extends Thread{
 
     void setFileList(ArrayList<File> file_list) {
         fileList = file_list;
+    }
+
+    void setFilesToDelete(HashMap<String, File> filesToDelete) {
+        filesToRemove = filesToDelete;
     }
 
     private static class LaunchCancelWindow extends SwingWorker<Void, Void>{

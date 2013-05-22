@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +74,7 @@ class UploadSplash extends Splash{
         final HashMap fileDesc = new HashMap();
         final HashMap<String, ArrayList<String>> filesToMove
                 = new HashMap<>();
+        final HashMap<String, File> filesToDelete = new HashMap<>();
         
         if (sleepMin != 0) {
             say("waiting for " + sleepMin + " minute" + 
@@ -125,6 +127,7 @@ class UploadSplash extends Splash{
                 }
                 ArrayList<String> moveList = e.getValue();
                 filesToMove.put(zipPath, moveList);
+                filesToDelete.put(zipPath, zipFile);
             }
         } else {           
             for (final File f: upload_list) {
@@ -144,6 +147,7 @@ class UploadSplash extends Splash{
         //</editor-fold>
 
         dispose();
+        upload_thread.setFilesToDelete(filesToDelete);
         upload_thread.setFileDesc(fileDesc);
         upload_thread.setFileList(fileList);
         upload_thread.setFilesToMove(filesToMove);
