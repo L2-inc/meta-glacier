@@ -15,11 +15,27 @@ package com.vrane.metaGlacier;
  * @author K Z Win
  */
 public interface FileProgressReporter {
-    
+
+    /**
+     * Sets the current file position in bytes.
+     * 
+     * @param position
+     */
     abstract void setFilePosition(final long position);
-    
+
+    /**
+     * Sets the total file size.
+     * 
+     * @param size
+     */
     abstract void setFileSize(final long size);
 
+    /**
+     * Sets total size of all files by passing the position of the current file.
+     * Implement this only if your class involves handling multiple files.
+     *
+     * @param pos is the current file position in bytes.
+     */
     abstract void updateTotalSize(final long pos);
     
 }

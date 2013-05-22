@@ -66,7 +66,7 @@ class VaultInventoryJobDialog extends JDialog {
                 }
                 final String noWhiteSpace = snsTopic.trim();
                 String jobId = new Vault(name)
-                        .initVaultInventoryJob(noWhiteSpace);
+                        .makeVaultInventoryJob(noWhiteSpace);
                 if (jobId == null) {
                     JOptionPane.showMessageDialog(null,
                             "Failed to create job.\nPlease check your input");

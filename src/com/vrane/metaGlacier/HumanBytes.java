@@ -16,7 +16,14 @@ import java.text.DecimalFormat;
  * @author K Z Win
  */
 public class HumanBytes {
+    /**
+     * Number 1024
+     */
     public static final long KILO = 1024;
+
+    /**
+     * Number 1024 * 1024
+     */
     public static final long MEGA = KILO * KILO;
     private static final long GIGA = MEGA * KILO;
     private static final long TERA = MEGA * MEGA;

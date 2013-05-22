@@ -40,17 +40,30 @@ import javax.swing.JTextArea;
 
 public class Main {
 
+    /**
+     * The main window; closing it exits the program.
+     */
+    public static GlacierFrame frame;
+
     private final static Preferences P =
             Preferences.userNodeForPackage(Main.class);
+    /**
+     * Window with log messages.
+     */
     public final static LogWindow logwindow = new LogWindow();
+
     private final static String NATIVE_LOOK = "native look and feel";
     
-    public static GlacierFrame frame;
     private final static GLogHandler gloghandler = new GLogHandler();
     private final static byte LOG_NAME_START = (byte) "com.vrane.".length();
     private final static Logger LGR = Logger.getLogger(Main.class.getName());
     private final static int PORT = 8866;
-    
+
+    /**
+     * Main entry point.
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
 //        if(System.getProperty("os.name").startsWith("Mac OS ")){
 //            System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -71,16 +84,33 @@ public class Main {
         frame.setVisible(true);
     }
 
+    /**
+     * Gets the logger object.
+     * 
+     * @param cl is the calling class
+     * @return Logger object with a log handler added to it.
+     */
     public static Logger getLogger(final Class cl){
         final Logger lgr = Logger.getLogger(cl.getName());
         lgr.addHandler(gloghandler);
         return lgr;
     }
 
-    public static void setNativeThemeFlag(final boolean selected) {
-        P.putBoolean(NATIVE_LOOK, selected);
+    /**
+     * Does nothing on Mac.  On windows, indicates whether to use Windows
+     * theme to draw windows components.
+     *
+     * @param flag supply false on windows if Java 'metal' theme is wanted.
+     */
+    public static void setNativeThemeFlag(final boolean flag) {
+        P.putBoolean(NATIVE_LOOK, flag);
     }
 
+    /**
+     * On windows, indicates whether Windows theme should be used to draw UI.
+     *
+     * @return true if Windows theme is wanted.
+     */
     public static boolean wantNativeTheme() {
         return P.getBoolean(NATIVE_LOOK, false);
     }
@@ -145,11 +175,14 @@ public class Main {
         }
         
     }
-    
+
+    /**
+     * This represents the window where log messages are added.
+     */
     public static class LogWindow extends MainFrame {
         private final JTextArea logg = new JTextArea(25, 60);
         
-        public LogWindow(){
+        LogWindow(){
             super("log window", P.getBoolean(NATIVE_LOOK, false));
             final JScrollPane logScrollPane = new JScrollPane(logg);
             final JPanel panl = new JPanel(new BorderLayout());
@@ -171,12 +204,13 @@ public class Main {
             });
             pack();
         }
-        
-        public void say(final String message){
+
+
+        void say(final String message){
             logg.append(message + "\n");
         }
 
-        public void clear(){
+        void clear(){
             logg.setText("");
         }
     }

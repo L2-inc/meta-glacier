@@ -69,14 +69,11 @@ class ASplash extends Splash{
         LGR.log(Level.INFO, "number of jobs to process {0}", jobs.size());
         for (final GlacierJobDescription j: jobs) {
             final String jobId = j.getJobId();
-            GetJobOutputRequest jobOutputRequest = new GetJobOutputRequest()
-                    .withVaultName(vaultName)
-                    .withJobId(jobId);         
             GetJobOutputResult jor = null;
             
             LGR.log(Level.FINE, "Getting data for {0}", jobId);
             try {
-                jor = vaultObj.getJobOutput(jobOutputRequest);
+                jor = vaultObj.getJobOutput(jobId);
             } catch (Exception e) {
                 LGR.log(Level.SEVERE, null, e);
                 continue;

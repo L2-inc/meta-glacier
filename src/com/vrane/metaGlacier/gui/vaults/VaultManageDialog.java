@@ -30,6 +30,11 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * Represents the window listing vaults in a region.
+ *
+ * @author me
+ */
 public class VaultManageDialog extends JDialog{
     
     private JPanel listContainer;
@@ -38,7 +43,15 @@ public class VaultManageDialog extends JDialog{
     private short max = 15;
     private byte pageSize = 15;
     private short listSize;
-    
+
+    /**
+     * Sole constructor.
+     *
+     * @param list is a list of AWS objects containing vault list
+     * @param deltaAWS time in ms taken to get this list from AWS
+     * @param deltaAPI time in ms taken to get this list from metadata API
+     * @param last_count a mapping of vault to the number of archives in it.
+     */
     public VaultManageDialog(final List<DescribeVaultOutput> list,
             final long deltaAWS,
             final long deltaAPI, final HashMap last_count){

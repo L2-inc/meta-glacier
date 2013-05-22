@@ -64,7 +64,7 @@ public class ArchiveJobDialog extends JDialog {
                     return;
                 }
                 final Archive a = new Archive(vault, archiveId, region);
-                final String jobId = a.initArchiveDownloadJob(snsTopic);
+                final String jobId = a.createDownloadJob(snsTopic);
                 ArchiveJobDialog.this.dispose();
                 if (jobId.isEmpty()) {
                    JOptionPane.showMessageDialog(null,

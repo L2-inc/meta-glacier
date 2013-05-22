@@ -11,6 +11,11 @@ package com.vrane.metaGlacier.gui.utilities;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * A mouse listener with all non-click events made no-ops.
+ * 
+ * @author me
+ */
 public abstract class MouseClickListener implements MouseListener{
 
     @Override

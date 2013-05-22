@@ -396,10 +396,22 @@ public class Archive {
     }
 
     //<editor-fold defaultstate="collapsed" desc="download stuff">
+    /**
+     * Sets download job id.
+     *
+     * @param _j job id string
+     */
     public void setJobId(final String _j){
         downloadJobId = _j;
     }
-    
+
+    /**
+     * Downloads an archive to a given file object.
+     *
+     * @param fileObj represents the downloaded file
+     * @return true on success; false on any error.
+     * @throws Exception
+     */
     public boolean download(final File fileObj) throws Exception {
         GetJobOutputRequest getJobOutputRequest = new GetJobOutputRequest()
             .withVaultName(vaultName)
@@ -476,7 +488,13 @@ public class Archive {
         return downloadJobId;
     }
 
-    public String initArchiveDownloadJob(final String snsTopic){
+    /**
+     * Given a sns topic this creates a job to download.
+     *
+     * @param snsTopic is string sns topic for this region
+     * @return jobid
+     */
+    public String createDownloadJob(final String snsTopic){
         JobParameters jobParameters = new JobParameters()
                 .withArchiveId(archiveId)
                 .withSNSTopic(snsTopic)
@@ -510,37 +528,83 @@ public class Archive {
         return jobId;
     }
     //</editor-fold>
-    
+
+    /**
+     * Sets the vault name of this archive.
+     *
+     * @param n vault name string
+     * @return this object
+     */
     public Archive withVaultName(final String n){
         vaultName = n;
         return this;
     }
-    
+
+    /**
+     * Gets the vaultname of this archive.
+     *
+     * @return vault name as string
+     */
     public String getVaultName(){
         return vaultName;
     }
-    
+
+    /**
+     * Gets the number of bytes in this archive.
+     *
+     * @return archive size
+     */
     public long getSize(){
         return size;
     }
 
+    /**
+     * Sets the parcel size to use during multipart upload. Set it large if
+     * your upload speed is very fast.  Minimum is 1 MB and must be multiples of
+     * 2 in bytes.  It is acceptable for an archive size to be less than this
+     * number.  If this number is not set the upload will be done as one whole
+     * http request.
+     *
+     * @param bytes
+     * @return this object
+     */
     public Archive withGranularity(int bytes){
         granularity = bytes;
         return this;
     }
-    
+
+    /**
+     * Gets 138 byte archive id unique per region and AWS account.
+     *
+     * @return archive id string; not null
+     */
     public String getArchiveId(){
         return archiveId;
     }
-    
+
+    /**
+     * Gets the date string returned by AWS for archive upload time.
+     *
+     * @return archive creation time in string; not null
+     */
     public String getAWSCreateTime(){
         return aws_create_time;
     }
-    
+
+    /**
+     * Gets the archive checksum in AWS.
+     *
+     * @return checksum string; not null
+     */
     public String getSHA256TreeHash(){
         return sha256treehash;
     }
-        
+
+    /**
+     * Gets the archive description set by the user.
+     *
+     * @return description string; can be null
+     */
     public String getDescription(){
         return descriptionString;
     }
@@ -588,25 +652,42 @@ public class Archive {
         deleteError = "Error in deleting from Metadata Provider";
         return false;
     }
-    
+
+    /**
+     * Returns the error string set by delete method.
+     * 
+     * @return string describing delete error.
+     */
     public String getDeleteError(){
         return deleteError;
     }
-       
-    public Archive withDeletedFlag(final boolean flag) { 
-        deletedInAWS = flag;
-        return this;
-    }
-    
+
+    /**
+     * Indicates whether this archive has been deleted in AWS.
+     *
+     * @return true if this object has been deleted
+     */
     public boolean deletedInAWS(){
         return deletedInAWS;
     }
 
+    /**
+     * Sets the archive description string to be stored in AWS.
+     * 
+     * @param description
+     * @return this object
+     */
     public Archive withDescription(final String description) {
         descriptionString = description;
         return this;
     }
 
+    /**
+     * Sets a list files included in this archive.
+     *
+     * @param fileList
+     * @return this object
+     */
     public Archive withFiles(final ArrayList<String> fileList) {
         uploadedFileList = fileList;
         return this;

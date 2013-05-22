@@ -11,15 +11,24 @@ package com.vrane.metaGlacier;
 import java.text.DecimalFormat;
 
 /**
- *
+ * Contains a sigle method used by a few other classes.
  * @author K Z Win
  */
 public class Utilities {
 
-    public static String[] getRateInfo(final float rate_in_kb, final long size_in_bytes) {
+    /**
+     * Gets file transfer rate as formatted string and time to finish the
+     * transfer.
+     *
+     * @param rate_in_kb float in kB/s
+     * @param remain_bytes remaining bytes to finish the transfer
+     * @return array of string; first element is formatted rate in kB/s and the
+     * second element is time to finish
+     */
+    public static String[] getRateInfo(final float rate_in_kb, final long remain_bytes) {
         DecimalFormat myFormatter = new DecimalFormat("####.#");
         String rateString = myFormatter.format(rate_in_kb);
-        int time_in_s = (int) (size_in_bytes / rate_in_kb / HumanBytes.KILO);
+        int time_in_s = (int) (remain_bytes / rate_in_kb / HumanBytes.KILO);
         String time_to_upload;
         if (time_in_s < 60) {
             time_to_upload = setUnit((byte) time_in_s, "second");
@@ -37,7 +46,7 @@ public class Utilities {
         return new String[]{rateString, time_to_upload};
     }
 
-    static String setUnit(final byte number, final String unit) {
+    private static String setUnit(final byte number, final String unit) {
         String num_with_string = number + " " + unit;
         if (number > 1) {
             num_with_string += "s";
