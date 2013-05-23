@@ -15,13 +15,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * This thread make all preparation necessary for uploading archives.
@@ -38,6 +44,8 @@ class UploadSplash extends Splash{
     private Long sleepMin;
     private ArrayList<File> upload_list;
     private UploadThread upload_thread;
+    private HashSet<String> filesToDelete = new HashSet<>();
+    private boolean cancelled;
 
     static UploadSplash getInstance(final ArrayList<File> _list, final long sleep,
             final UploadThread ut){
@@ -55,11 +63,23 @@ class UploadSplash extends Splash{
         sleepMin = sleep;
         upload_list = flist;
         upload_thread = ut;
+        cancelled = false;
         addWindowListener(new WindowAdapter(){
             
             @Override
             public void windowClosing(WindowEvent e){
                 LGR.info("cancelling creating zip files");
+                cancelled = true;
+                for (final String p: filesToDelete) {
+                    //Code copied from UploadThread because last file is locked
+                    LGR.log(Level.INFO, "deleting file {0}", p);
+                    Path path = Paths.get(p);
+                    try {
+                        Files.delete(path);
+                    } catch (IOException ex) {
+                        LGR.log(Level.SEVERE, null, ex);
+                    }
+                }
                 upload_thread = null;
                 UploadSplash.this.dispose();
             }
@@ -70,11 +90,11 @@ class UploadSplash extends Splash{
     private void doWork(){
         int fileCount = 0;
         long totalSize = 0;
+        filesToDelete = new HashSet<>();
         final ArrayList<File> fileList = new ArrayList<>();
         final HashMap fileDesc = new HashMap();
         final HashMap<String, ArrayList<String>> filesToMove
                 = new HashMap<>();
-        final HashMap<String, File> filesToDelete = new HashMap<>();
         
         if (sleepMin != 0) {
             say("waiting for " + sleepMin + " minute" + 
@@ -100,15 +120,33 @@ class UploadSplash extends Splash{
                 LGR.finer("file list");
                 String zipPath = "";
                 say("making zip file " + ++fileCount);
-                final Zip z = new Zip(e.getKey());
-
+                LGR.log(Level.INFO, "making zip file {0}", fileCount);
+                final Zip z;
+                
+                if (cancelled) {
+                    return;
+                }
                 try {
-                    zipPath = z.zip(e.getValue().toArray(new String[0]));
+                    z = new Zip(e.getKey());
                 } catch (IOException ex) {
                     LGR.log(Level.SEVERE, null, ex);
                     return;
                 }
-                
+
+                zipPath = z.getPath();
+                filesToDelete.add(zipPath);
+
+                try {
+                    z.zip(e.getValue().toArray(new String[0]));
+                } catch (IOException ex) {
+                    LGR.log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, 
+                            "Cannot create zip file");
+                    return;
+                }                
+                if (cancelled) {
+                    return;
+                }
                 File zipFile = new File(zipPath);
                 fileList.add(zipFile);
                 totalSize += zipFile.length();
@@ -127,7 +165,6 @@ class UploadSplash extends Splash{
                 }
                 ArrayList<String> moveList = e.getValue();
                 filesToMove.put(zipPath, moveList);
-                filesToDelete.put(zipPath, zipFile);
             }
         } else {           
             for (final File f: upload_list) {

@@ -22,19 +22,24 @@ import java.util.zip.ZipOutputStream;
 
 class Zip {
     
-    private String fileName;
+    private String path;
+    private final File temp;
     
-    Zip(final String seed){
-        fileName = seed;
+    Zip(String seed) throws IOException{
+        if (seed.length() < 3) {
+            // This handles createTempFile limitation
+            seed = seed + "_glacier_";
+        }
+        temp = File.createTempFile(seed, ".zip");
+        temp.deleteOnExit();
+        path = temp.getAbsolutePath();
+    }
+    
+    public String getPath(){
+        return path;
     }
     
     String zip(String[] files) throws IOException{
-        if (fileName.length() < 3) {
-            // This handles createTempFile limitation
-            fileName = fileName + "_glacier_";
-        }
-        File temp = File.createTempFile(fileName, ".zip");
-        temp.deleteOnExit();
         try (ZipOutputStream zos
                 = new ZipOutputStream(new FileOutputStream(temp))) {
             byte[] buf = new byte[(int) HumanBytes.KILO];
@@ -49,6 +54,6 @@ class Zip {
                 }
             }
         }
-        return temp.getAbsolutePath();
+        return path;
     }
 }

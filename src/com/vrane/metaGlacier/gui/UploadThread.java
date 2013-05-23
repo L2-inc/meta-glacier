@@ -20,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ class UploadThread extends Thread{
     private final static Logger LGR = Main.getLogger(UploadThread.class);
 
     private HashMap<String, ArrayList<String>> filesToMove;
-    private HashMap<String, File> filesToRemove = new HashMap<>();
+    private HashSet<String> filesToRemove = new HashSet<>();
     private HashMap<String, String> fileDesc;
     private ArrayList<File> fileList;
     private long totalSize = 0;
@@ -119,6 +120,9 @@ class UploadThread extends Thread{
                 ut.interrupt();
                 new LaunchCancelWindow(ut).execute();
                 UploadSplash.upload_splash = null;
+                for (final String p: filesToRemove) {
+                    deleteZip(p);
+                }
                 return;
             }
             if (ut.failed()) {
@@ -146,15 +150,7 @@ class UploadThread extends Thread{
             upload_dialog.setCurrentTotalSize(currentTotalSize);
             //</editor-fold>
             
-            if (filesToRemove.containsKey(path)) {
-                LGR.log(Level.INFO, "deleting file {0}", path);
-                Path p = Paths.get(path);
-                try {
-                    Files.delete(p);
-                } catch (IOException ex) {
-                    LGR.log(Level.SEVERE, null, ex);
-                }
-            }
+            deleteZip(path);
             if (moveDir == null || moveDir.isEmpty()) {
                 continue;
             }
@@ -184,12 +180,24 @@ class UploadThread extends Thread{
         upload_dialog.dispose();
         UploadSplash.upload_splash = null;
     }
+    
+    private void deleteZip(final String p){
+        if (filesToRemove.contains(p)) {
+            LGR.log(Level.INFO, "deleting file {0}", p);
+            Path path = Paths.get(p);
+            try {
+                Files.delete(path);
+            } catch (IOException ex) {
+                LGR.log(Level.SEVERE, null, ex);
+            }
+        }        
+    }
 
     void setFileList(ArrayList<File> file_list) {
         fileList = file_list;
     }
 
-    void setFilesToDelete(HashMap<String, File> filesToDelete) {
+    void setFilesToDelete(HashSet<String> filesToDelete) {
         filesToRemove = filesToDelete;
     }
 
