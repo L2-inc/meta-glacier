@@ -40,7 +40,10 @@ public class SearchDialog extends MainFrame{
     private final LongPanel resPanel = new LongPanel();
     private final JTextField locationBox = new JTextField(8);
     private final LocationPanel locationPanel = new LocationPanel(locationBox);
-    
+
+    /**
+     * Constructs a window with all search fields.
+     */
     public SearchDialog(){
         super("search", false);
         

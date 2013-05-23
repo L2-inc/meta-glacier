@@ -95,8 +95,7 @@ class UploadThread extends Thread{
 
             //<editor-fold defaultstate="collapsed" desc="set up current file label">
             upload_dialog
-                    .reInitCurrentFilePb(file.getName(),
-                    HumanBytes.convert(size));
+                    .initCurrentFilePb(file.getName(), HumanBytes.convert(size));
 
             //</editor-fold>
 

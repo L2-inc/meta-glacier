@@ -12,7 +12,6 @@ import com.vrane.metaGlacier.HumanBytes;
 import com.vrane.metaGlacier.Main;
 import com.vrane.metaGlacier.Utilities;
 import com.vrane.metaGlacier.Vault;
-import com.vrane.metaGlacier.gui.utilities.FolderTextField;
 import com.vrane.metaGlacier.gui.utilities.MouseClickListener;
 import com.vrane.metaGlacier.gui.utilities.SpringPanel;
 import java.awt.event.ActionEvent;

@@ -9,7 +9,7 @@
 package com.vrane.metaGlacier;
 
 /**
- * Implement this to receive file progress from an long running process like
+ * Implement this to receive file progress from a long running process like
  * upload or download.
  * 
  * @author K Z Win

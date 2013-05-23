@@ -31,8 +31,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- * This is the entry point class.
- * It starts a JFrame and set up metadata credential.
+ * This is the entry class.
+ * It starts a JFrame, set up metadata credential, and provide a method to get
+ * a logger instance.
  * 
  * @author K Z Win
  * @version     %I%, %G%
@@ -62,7 +63,7 @@ public class Main {
     /**
      * Main entry point.
      * 
-     * @param args
+     * @param args command line arguments not used.
      */
     public static void main(String[] args) {
 //        if(System.getProperty("os.name").startsWith("Mac OS ")){
@@ -97,7 +98,7 @@ public class Main {
     }
 
     /**
-     * Does nothing on Mac.  On windows, indicates whether to use Windows
+     * Does nothing on Mac.  On windows, set a flag on whether to use Windows
      * theme to draw windows components.
      *
      * @param flag supply false on windows if Java 'metal' theme is wanted.
@@ -114,7 +115,7 @@ public class Main {
     public static boolean wantNativeTheme() {
         return P.getBoolean(NATIVE_LOOK, false);
     }
-    
+
     private static class GLogHandler extends Handler {
 
         @Override
@@ -131,6 +132,7 @@ public class Main {
             final Level log_level = lr.getLevel();
             String level_string = log_level.getLocalizedName();
             final Throwable t = lr.getThrown();
+            
             if (log_level.intValue() > Level.INFO.intValue()){
                 level_string += " " + new Date().toString();
             }
@@ -177,7 +179,7 @@ public class Main {
     }
 
     /**
-     * This represents the window where log messages are added.
+     * This represents the window where log messages are shown.
      */
     public static class LogWindow extends MainFrame {
         private final JTextArea logg = new JTextArea(25, 60);
@@ -204,7 +206,6 @@ public class Main {
             });
             pack();
         }
-
 
         void say(final String message){
             logg.append(message + "\n");

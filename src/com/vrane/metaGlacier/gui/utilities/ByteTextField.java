@@ -11,8 +11,18 @@ package com.vrane.metaGlacier.gui.utilities;
 import com.vrane.metaGlacier.HumanBytes;
 import javax.swing.JTextField;
 
+/**
+ * Represents a JTextField for showing file size.
+ *
+ * @author K. Z. Win
+ */
 public class ByteTextField extends JTextField{
-    
+
+    /**
+     * Constructs a JTextField with properly formatted file size.
+     * 
+     * @param B size in bytes
+     */
     public ByteTextField(final long B){
         super(6); // 6 is just right for windows; just a little too big for mac
         setText(HumanBytes.convert(B));

@@ -33,7 +33,7 @@ import javax.swing.border.EtchedBorder;
 /**
  * Represents the window listing vaults in a region.
  *
- * @author me
+ * @author K Z Win
  */
 public class VaultManageDialog extends JDialog{
     

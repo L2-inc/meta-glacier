@@ -11,11 +11,21 @@ package com.vrane.metaGlacier.gui.utilities;
 import javax.swing.JLabel;
 
 public abstract class ListPanelModel extends SpringPanel{
-    
+
+    /**
+     * Max index number of the list that this panel will draw.
+     */
     protected int maximum = Integer.MAX_VALUE;
+
+    /**
+     * Min index number of the list that this panel will draw.
+     */
     protected int minimum = 1;
     private short columns;
-    
+
+    /**
+     * Sole constructor to be extended by subclasses.
+     */
     protected ListPanelModel(){}
 
     /**

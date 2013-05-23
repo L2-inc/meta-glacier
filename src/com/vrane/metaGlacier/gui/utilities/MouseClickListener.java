@@ -14,7 +14,7 @@ import java.awt.event.MouseListener;
 /**
  * A mouse listener with all non-click events made no-ops.
  * 
- * @author me
+ * @author K Z Win
  */
 public abstract class MouseClickListener implements MouseListener{
 

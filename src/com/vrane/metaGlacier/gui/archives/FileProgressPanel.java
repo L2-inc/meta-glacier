@@ -45,6 +45,9 @@ public class FileProgressPanel extends JPanel implements FileProgressReporter{
     private long last_position = 0;
     private long last_update = 0;
 
+    /**
+     * A JPanel constructor.
+     */
     public FileProgressPanel() {
         super(new BorderLayout());
         JPanel innerPanel = new JPanel(new GridLayout(0, 2, 10, 10));
@@ -110,8 +113,13 @@ public class FileProgressPanel extends JPanel implements FileProgressReporter{
         }
     }
 
-
-    public void reInitCurrentFilePb(String fn, String size) {
+    /**
+     * Initializes the progress bar.
+     * 
+     * @param fn filename
+     * @param size file size string
+     */
+    public void resetCurrentFilePb(String fn, String size) {
         String label = fn;
 
         LGR.log(Level.INFO,

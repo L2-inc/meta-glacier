@@ -71,7 +71,7 @@ public class Archive {
     private String downloadJobId;
     private String aws_create_time;
     private String sha256treehash;
-    private int granularity;
+    private long granularity;
     private long startEpoch;
     private long finishEpoch;
     private boolean deletedInAWS = false;
@@ -518,7 +518,7 @@ public class Archive {
             LGR.log(Level.SEVERE, null, e);
         }
         final String jobId =
-                initiateJobResult == null ? "" : initiateJobResult.getJobId();
+                initiateJobResult == null ? null : initiateJobResult.getJobId();
         if (jobId != null) {
             LGR.log(Level.INFO, "download job id is {0}{1}",
                    new Object[]{jobId.substring(0, 22), "..."});
@@ -568,7 +568,7 @@ public class Archive {
      * @param bytes
      * @return this object
      */
-    public Archive withGranularity(int bytes){
+    public Archive withGranularity(long bytes){
         granularity = bytes;
         return this;
     }

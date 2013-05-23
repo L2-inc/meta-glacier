@@ -28,6 +28,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Represents main window containing a list of archives to show.
+ * 
+ * @author K Z Win
+ */
 public class ArchiveManageDialog extends JDialog{
     private final static String[] HEADER_COLUMNS = {"", "   Size", "", "", ""};
     private final static byte PAGE_SIZE = 20;
@@ -40,6 +45,16 @@ public class ArchiveManageDialog extends JDialog{
     private int max = 20;
     private ArchiveListPanel alp;
 
+    /**
+     * Constructor taking vault_name, list of archives from AWS, list of
+     * extra archives from metadata etc.
+     * 
+     * @param vault_name vault name can be null when it is a search result
+     * @param Archives archive list from AWS
+     * @param archivesFromMetadata extra archives in metadata not in AWS.
+     * @param isSearchResult true if the list to display is a search result.
+     * @param title title string of the window
+     */
     public ArchiveManageDialog(final String vault_name,
             final ArrayList<Archive> Archives,
             final ArrayList<MArchive> archivesFromMetadata,

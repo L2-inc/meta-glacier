@@ -149,10 +149,7 @@ public class GlacierFrame extends MainFrame
      
     private long mCredentialsSetTime = Long.MIN_VALUE;
     
-    /* In multipart upload, one part cannot be bigger than 4GB.
-    *  Hence, "long" type is unnecessary
-    */
-    private int granularity = 0;
+    private long granularity = 0;
     private final ActionListener metadata_credentials = new ActionListener(){
 
         @Override
@@ -168,7 +165,10 @@ public class GlacierFrame extends MainFrame
             GlacierMetadata.setCredentials(GlacierFrame.this);
         }
     };
-    
+
+    /**
+     * A JFrame constructor.  Program exits when it is closed.
+     */
     public GlacierFrame() {
         //Create and set up the window.
         super("Glacier", false);
@@ -551,24 +551,51 @@ public class GlacierFrame extends MainFrame
         setComputerId(P.get(COMPUTER_ID_KEY_LOCAL, null));
         MAIN_PANEL.initVaultInputField();
     }
-    
+
+    /**
+     * Indicates whether to get confirmation from user to get metadata if there
+     * is no AWS inventory data.
+     * 
+     * @return true if user always want to get data from metadata.
+     */
     public boolean doNotConfirmGettingMetadata() {
         return alwaysGetMetadataMenuItem.isSelected();
     }
-    
+
+    /**
+     * Gets a string which identifies the computer doing the upload to metadata
+     * server.
+     *
+     * @return computer id string to be stored with uploaded archive.
+     */
     public static String getComputerId() {
         return computer_id;
     }
 
+    /**
+     * Gets the number of AWS calls since last reset.
+     *
+     * @return AWS API call
+     */
     public static int getAWSCalls() {
         return P.getInt(NUMBER_OF_AWS_API_CALLS, 0);
     }
 
+    /**
+     * Gets the number of days since AWS API call number was reset.
+     *
+     * @return number of days as string
+     */
     public static String getAWSapiLastReset() {
         return getNumberOfDays(P.getLong(LAST_AWS_API_CALL_RESET,
                 System.currentTimeMillis()));
     }
-    
+
+    /**
+     * Gets the number of days since metadata API call number was reset.
+     *
+     * @return number of days as string
+     */
     public static String getAPILastReset(){
         return getNumberOfDays(GlacierMetadata.getAPICounterResetTime());
     }
@@ -600,11 +627,22 @@ public class GlacierFrame extends MainFrame
         }
         computer_id = cid;
     }
-    
+
+    /**
+     * Indicates whether to show deleted archives.
+     *
+     * @return true if user wants to see deleted archives; false by default.
+     */
     public boolean showDeleted() {
         return SHOW_DELETED_ARCHIVES.isSelected();
     }
-    
+
+    /**
+     * Indicates whether user wants to save photo metadata in the cloud.
+     *
+     * @return false if user does not want to store photo metadata;
+     * true by default.
+     */
     public boolean canSavePhotoMetadata() {
         return SAVE_PHOTO_MENU.isSelected();
     }
@@ -615,7 +653,12 @@ public class GlacierFrame extends MainFrame
         return ( encPass == null )
                 ? null : encryptionObj.decrypt(encPass);
     }
-    
+
+    /**
+     * Gets the currently selected AWS region.
+     *
+     * @return string such as 'us-west-2', 'eu-west-1'
+     */
     public static String getAWSRegion(){
         return selectedRegion;
     }
@@ -630,14 +673,30 @@ public class GlacierFrame extends MainFrame
         return secretKeyString;
     }
 
-    public int getGranularity() {
+    /**
+     * Gets the upload size used during multipart upload.
+     *
+     * @return size in bytes
+     */
+    public long getGranularity() {
         return granularity;
     }
-    
+
+    /**
+     * Returns AWS client in the current region.
+     *
+     * @return AWS client object
+     */
     public static AmazonGlacierClient getClient(){
         return getClient(getAWSRegion());
     }
-    
+
+    /**
+     * Returns the AWS client in the specified region.
+     *
+     * @param region string such as 'us-west-1', 'eu-west-1'
+     * @return AWS client object
+     */
     public static AmazonGlacierClient getClient(final String region){
             final AmazonGlacierClient client = new AmazonGlacierClient(Main.frame);
         int current_api_call_count = P.getInt(NUMBER_OF_AWS_API_CALLS, 0);
@@ -650,12 +709,24 @@ public class GlacierFrame extends MainFrame
         P.putInt(NUMBER_OF_AWS_API_CALLS, 1 + current_api_call_count);
         return client;    
     }
-    
+
+    /**
+     * Indicates whether metadata account is setup.
+     * 
+     * @return true if metada credentials are available.
+     */
     public static boolean haveMetadataProvider(){
         return (metadataUser != null && !metadataUser.isEmpty() 
                 && metadataPassword != null && !metadataPassword.isEmpty());
     }
-    
+
+    /**
+     * Make a JLabel with fix sized label string.
+     *
+     * @param n string to be used in label
+     * @param len at most this many characters in this label to be used.
+     * @return JLabel
+     */
     public static JLabel makeLabelWithLength(String n, final byte len) {
         String dn = n;
         

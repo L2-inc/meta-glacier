@@ -105,7 +105,7 @@ public class AllVaults {
         } while (marker !=null);
         return allVaults;
     }
-    
+
     /**
      * Returns a set of vault names.
      * This method makes use of data cached by <b>list()</b> and call that

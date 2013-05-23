@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 /**
  * This is a generic JDialog class for collecting account information from the user.
  * It is used both to collect AWS account and metadata account.
+ *
  * @author K Z Win
  */
 class AccountDialog extends JDialog {
@@ -32,7 +33,18 @@ class AccountDialog extends JDialog {
     private String userString = "";
     private String passString = "";
     private final Preferences pref;
-    
+
+    /**
+     * Creates a window to collect credentials for AWS and metadata accounts.
+     *
+     * @param userLabel  label to use for "user" field.
+     * @param passLabel  label to use for "password" field.
+     * @param P <code>Preferences</code> object to be saved to retrieve/save
+     * @param userKey <code>Preferences</code> key for "user" data
+     * @param passKey <code>Preferences</code> key for "pass" data
+     * @param initUser initial string to populate "user" field
+     * @param initPass initial string to populate "pass" field.
+     */
     AccountDialog(final String userLabel, final String passLabel,
             final Preferences P, final String userKey, final String passKey,
             final String initUser, final String initPass){

@@ -43,7 +43,7 @@ public class DownloadDialog extends JDialog{
                 download_thread.interrupt();
             }
         });
-        fpp.reInitCurrentFilePb(sel.getName(),
+        fpp.resetCurrentFilePb(sel.getName(),
                 HumanBytes.convert(archive.getSize()));
     }
     

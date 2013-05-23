@@ -16,7 +16,7 @@ import springutilities.SpringUtilities;
 /**
  * Use this panel to use <code>SpringLayout</code>.
  *
- * @author me
+ * @author K Z Win
  */
 public class SpringPanel extends JPanel{
     private final static int INITIAL_XY = 6;

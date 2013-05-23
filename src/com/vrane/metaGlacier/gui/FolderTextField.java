@@ -6,20 +6,21 @@
  * 
  * See LICENSE file accompanying this file.
  */
-package com.vrane.metaGlacier.gui.utilities;
+package com.vrane.metaGlacier.gui;
 
+import com.vrane.metaGlacier.gui.utilities.MouseClickListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
-public class FolderTextField extends JTextField{
+class FolderTextField extends JTextField{
     
     private final static Preferences P
             = Preferences.userNodeForPackage(FolderTextField.class);
     
-    public FolderTextField(final String _key){
+    FolderTextField(final String _key){
         super(P.get(_key, ""));
         setEditable(false);
         addMouseListener(new MouseClickListener(){

@@ -205,8 +205,8 @@ public class UploadDialog extends JFrame {
         currentTotalSize = current_total_size;
     }
 
-    void reInitCurrentFilePb(String fn, String size) {
-        fupp.reInitCurrentFilePb(fn, size);
+    void initCurrentFilePb(String fn, String size) {
+        fupp.resetCurrentFilePb(fn, size);
     }
             
     void prepareNewWindow(final int count, final long size){

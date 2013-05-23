@@ -25,8 +25,9 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- * This class is used for retrieving a list of archives from a given vault.
+ * Class used for retrieving a list of archives from a given vault.
  * It assumes that a vault-inventory job is ready.
+ *
  * @author K Z Win
  */
 public class VaultInventory {
@@ -38,14 +39,24 @@ public class VaultInventory {
     private JsonNode jobDescNode;
     private ArrayList<Archive> archives;
     private final String vaultName;
-    
-    public VaultInventory(final GetJobOutputResult g, final String n)
+
+    /**
+     * Construct an object.
+     *
+     * @param jor job output result
+     * @param vault_name
+     * @throws Exception
+     */
+    public VaultInventory(final GetJobOutputResult jor, final String vault_name)
             throws Exception{
-        vaultName = n;
+        vaultName = vault_name;
         Exception error = null;
         JsonParser jpDesc = null;
+        SimpleDateFormat formatter
+                = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
         try {
-            jpDesc = mapper.getJsonFactory().createJsonParser(g.getBody());
+            jpDesc = mapper.getJsonFactory().createJsonParser(jor.getBody());
         } catch (JsonParseException ex) {
             error = ex;
             LGR.log(Level.SEVERE, null, ex);
@@ -74,8 +85,6 @@ public class VaultInventory {
         if (error != null) {
             throw error;
         }
-        SimpleDateFormat formatter
-                = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
             inventoryDate
                     = formatter.parse(jobDescNode.get("InventoryDate")
@@ -88,7 +97,12 @@ public class VaultInventory {
             throw error;
         }
     }
-    
+
+    /**
+     * Gets a list of <code>Archive</code> objects in this vault.
+     * 
+     * @return an list of archives.
+     */
     public ArrayList<Archive> getArchives(){
         if (archives != null) {
             return archives;
@@ -111,7 +125,12 @@ public class VaultInventory {
         }
         return archives; 
     }
-    
+
+    /**
+     * Gets date of the inventory.
+     *
+     * @return date object
+     */
     public Date getInventoryDate(){
         return inventoryDate;
     }

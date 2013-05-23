@@ -11,7 +11,8 @@ package com.vrane.metaGlacier;
 import java.text.DecimalFormat;
 
 /**
- * Contains a sigle method used by a few other classes.
+ * Contains a single method used by a few other classes.
+ *
  * @author K Z Win
  */
 public class Utilities {
@@ -30,6 +31,7 @@ public class Utilities {
         String rateString = myFormatter.format(rate_in_kb);
         int time_in_s = (int) (remain_bytes / rate_in_kb / HumanBytes.KILO);
         String time_to_upload;
+        
         if (time_in_s < 60) {
             time_to_upload = setUnit((byte) time_in_s, "second");
         } else if (time_in_s >= 60 && time_in_s < 3600) {
@@ -48,6 +50,7 @@ public class Utilities {
 
     private static String setUnit(final byte number, final String unit) {
         String num_with_string = number + " " + unit;
+        
         if (number > 1) {
             num_with_string += "s";
         }
