@@ -25,6 +25,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+/**
+ * Represents window displayed for creating download archive job.
+ *
+ * @author K Z Win
+ */
 public class ArchiveJobDialog extends JDialog {
     
     private final static Preferences P
@@ -33,6 +38,13 @@ public class ArchiveJobDialog extends JDialog {
             = Main.getLogger(ArchiveJobDialog.class);
     private final static String SNS_TOPIC_KEY = "sns_topic_key";
 
+    /**
+     * Creates a window to creating a download job.
+     *
+     * @param archiveId 138 byets archive id
+     * @param vault vault name
+     * @param region region string
+     */
     public ArchiveJobDialog(final String archiveId,final String vault,
             final String region){
         super(Main.frame, true);

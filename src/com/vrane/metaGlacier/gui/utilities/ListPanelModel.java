@@ -10,6 +10,11 @@ package com.vrane.metaGlacier.gui.utilities;
 
 import javax.swing.JLabel;
 
+/**
+ * Represents a panel containing a spreadsheet like list.
+ *
+ * @author K Z Win
+ */
 public abstract class ListPanelModel extends SpringPanel{
 
     /**

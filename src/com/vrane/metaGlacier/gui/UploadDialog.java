@@ -200,7 +200,12 @@ public class UploadDialog extends JFrame {
         fileCountPb.setValue(currentCount);
         fileCountPb.setString(currentCount + "/" + files_to_upload);
     }  
-    
+
+    /**
+     * Sets the size total of all archives to upload.
+     * 
+     * @param current_total_size
+     */
     public void setCurrentTotalSize(long current_total_size) {
         currentTotalSize = current_total_size;
     }

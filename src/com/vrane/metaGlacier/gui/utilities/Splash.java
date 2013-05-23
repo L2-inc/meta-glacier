@@ -34,7 +34,10 @@ public abstract class Splash extends JDialog{
     public final void say(final String m){
         logg.insert(m + "\n", 0);
     }
-    
+
+    /**
+     * Sole constructor.
+     */
     protected Splash(){
         final JPanel jpa = new JPanel();
         final JProgressBar PB = new JProgressBar();

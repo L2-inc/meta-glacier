@@ -26,7 +26,15 @@ public class SNSTopic {
     
     private AmazonSNSClient snsClient = new AmazonSNSClient(Main.frame);
     private String topicARN;
-    
+
+    /**
+     * Creates a SNS topic.
+     *
+     * @param topic string
+     * @param email address to be notified when there is any event for this topic.
+     * @return false if there is any error.
+     * @throws Exception
+     */
     public boolean createTopic(final String topic, final String email)
             throws Exception{
         CreateTopicRequest request = new CreateTopicRequest()
@@ -54,7 +62,12 @@ public class SNSTopic {
         
         return true;
     }
-    
+
+    /**
+     * Gets topic ARN to be used when submitting jobs to AWS.
+     *
+     * @return topic arn string.
+     */
     public String getTopicARN(){
         return topicARN;
     }

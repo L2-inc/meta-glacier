@@ -663,11 +663,21 @@ public class GlacierFrame extends MainFrame
         return selectedRegion;
     }
 
+    /**
+     * Gets AWS Access Key.
+     *
+     * @return access key string
+     */
     @Override
     public String getAWSAccessKeyId() {
         return accessKeyString;
     }
 
+    /**
+     * Gets AWS Secret Key.
+     *
+     * @return secret key string
+     */
     @Override
     public String getAWSSecretKey() {
         return secretKeyString;
@@ -739,26 +749,52 @@ public class GlacierFrame extends MainFrame
         }
         return label;
     }
-    
+
+    /**
+     * Make a JLabel with label string of at most 20 characters.
+     *
+     * @param string label string
+     * @return JLabel
+     */
     public static JLabel makeLabel(String string) {
         return makeLabelWithLength(string, (byte) 20);
     }
 
+    /**
+     * Returns metadata account user string.
+     *
+     * @return user string
+     */
     @Override
     public String getMPCUser() {
         return metadataUser;
     }
 
+    /**
+     * Returns metadata account password string.
+     *
+     * @return password string
+     */
     @Override
     public String getMPCPass() {
         return metadataPassword;
     }
 
+    /**
+     * Time when metadata credentials are set.
+     *
+     * @return unix epoch in millisecond
+     */
     @Override
     public long lastMPCSet() {
         return mCredentialsSetTime;
     }
 
+    /**
+     * Indicates whether AWS credentials are available.
+     *
+     * @return false if there is no AWS credentials.
+     */
     private boolean haveAWSCredentials() {
         return secretKeyString != null && accessKeyString != null
                 && !accessKeyString.isEmpty() && !secretKeyString.isEmpty()
