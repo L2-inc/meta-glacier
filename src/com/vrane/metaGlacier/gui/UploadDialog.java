@@ -230,7 +230,13 @@ public class UploadDialog extends JFrame {
             int currentTotalSizePercent
                     = (int) ((float) _current_total_size * 100. /
                             (float) finalTotalSize);
-
+            totalSizePb.setValue(currentTotalSizePercent);
+            totalSizePb.setString(currentTotalSizePercent + "% of "
+                    + HumanBytes.convert(finalTotalSize));
+            /* Do not bother updating time if therer is only 1 file */
+            if (files_to_upload == 1) {
+                return;
+            }
             if (most_recent_rate > 0.) {
                 String[] rate_info =
                         Utilities.getRateInfo(most_recent_rate,
@@ -239,9 +245,6 @@ public class UploadDialog extends JFrame {
             } else {
                 TIME_TO_FINISH.setText("Collecting data...");
             }
-            totalSizePb.setValue(currentTotalSizePercent);
-            totalSizePb.setString(currentTotalSizePercent + "% of "
-                    + HumanBytes.convert(finalTotalSize));
         }
     }
 }

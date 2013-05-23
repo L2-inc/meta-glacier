@@ -379,7 +379,8 @@ class MainPanel extends SpringPanel{
         
         @Override
         public Void doInBackground() {
-            UploadSplash.getInstance(files_to_upload, 1L * sleep_minutes, upload_thread);
+            UploadSplash.getInstance(files_to_upload,
+                    1L * sleep_minutes, upload_thread);
             return null;
         }
     }
