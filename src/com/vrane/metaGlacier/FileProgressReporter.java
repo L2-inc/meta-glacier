@@ -19,22 +19,24 @@ public interface FileProgressReporter {
     /**
      * Sets the current file position in bytes.
      * 
-     * @param position
+     * @param position is the current file position
      */
     abstract void setFilePosition(final long position);
 
     /**
-     * Sets the total file size.
+     * Sets the file size.
      * 
-     * @param size
+     * @param size the file size in bytes
      */
     abstract void setFileSize(final long size);
 
     /**
-     * Sets total size of all files by passing the position of the current file.
-     * Implement this only if your class involves handling multiple files.
+     * Reports the total size uploaded so far for all files by passing the
+     * position of the current file.
+     * Implement this only if your class involves handling multiple files;
+     * otherwise implement as no-ops.
      *
-     * @param pos is the current file position in bytes.
+     * @param pos is the file position in bytes of the current file.
      */
     abstract void updateTotalSize(final long pos);
     
