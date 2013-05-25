@@ -311,6 +311,7 @@ public class Archive {
                     } catch (RequestTimeoutException ex) {
                         LGR.log(Level.SEVERE, null, ex);
                         LGR.severe("2nd time out.  Giving up");
+                        JOptionPane.showMessageDialog(null, "Error uploading");
                         return null;
                     }
                 } catch (Exception e) {
