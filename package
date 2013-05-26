@@ -1,3 +1,5 @@
+a=`git diff --shortstat`
+[ "$a" = ' 1 files changed, 1 insertions(+), 1 deletions(-)' ] || echo "other changes in git" && exit 1
 grep '38,-16,16,-45,74,-105,-3,26,10,17' src/com/vrane/metaGlacier/gui/GlacierFrame.java
 if [ $? -eq 0 ];
 then
@@ -29,3 +31,6 @@ rsync --delete -r dist/ $d/
 cd /tmp
 zip -r $f.zip $f
 echo $f
+echo "checking out src/com/vrane/metaGlacier/gui/GlacierFrame.java"
+cd -
+git checkout src/com/vrane/metaGlacier/gui/GlacierFrame.java
