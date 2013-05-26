@@ -92,9 +92,7 @@ public class Archive {
         aws_create_time = (String) m.get("CreationDate");
         sha256treehash = (String) m.get("SHA256TreeHash");
         fromAWSInventory = true;
-        
-        /* XXX FIXME problem directly going to long */
-        size = (long) (Integer) m.get("Size");
+        size = (Long) m.get("Size");
     }    
     
     /** 
