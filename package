@@ -1,7 +1,7 @@
 a=`git diff --shortstat`
 if [ "$a" != ' 1 files changed, 1 insertions(+), 1 deletions(-)' ];
 then
-	echo other changes in git
+	echo there must be exactly 1 line change for release key only in git
 	exit 1
 fi
 grep '38,-16,16,-45,74,-105,-3,26,10,17' src/com/vrane/metaGlacier/gui/GlacierFrame.java
