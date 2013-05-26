@@ -1,5 +1,9 @@
 a=`git diff --shortstat`
-[ "$a" = ' 1 files changed, 1 insertions(+), 1 deletions(-)' ] || echo "other changes in git" && exit 1
+if [ "$a" != ' 1 files changed, 1 insertions(+), 1 deletions(-)' ];
+then
+	echo other changes in git
+	exit 1
+fi
 grep '38,-16,16,-45,74,-105,-3,26,10,17' src/com/vrane/metaGlacier/gui/GlacierFrame.java
 if [ $? -eq 0 ];
 then
