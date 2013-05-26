@@ -76,7 +76,7 @@ public class GlacierFrame extends MainFrame
     private final static int MS_IN_A_DAY = 86400000;
     private final static short COMPUTER_ID_LENGTH = 256;
     private final static byte[] ENCRYPTION_KEY
-            = {38, -16, 16, -45, 74, -105, -3, 26, 10, 17};
+            = {38,-16,16,-45,74,-105,-3,26,10,17};
     private final static String SHOW_LOG_WINDOW_KEY = "hide log panel";
     private final static String AWS_ACCESS_KEY = "aws access";
     private final static String AWS_SECRET_KEY = "aws secret";
