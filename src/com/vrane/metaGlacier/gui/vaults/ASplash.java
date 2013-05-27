@@ -8,7 +8,6 @@
  */
 package com.vrane.metaGlacier.gui.vaults;
 
-import com.amazonaws.services.glacier.model.GetJobOutputRequest;
 import com.amazonaws.services.glacier.model.GetJobOutputResult;
 import com.amazonaws.services.glacier.model.GlacierJobDescription;
 import com.vrane.metaGlacier.AllVaults;
