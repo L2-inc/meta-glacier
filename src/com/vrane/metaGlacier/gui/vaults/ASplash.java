@@ -118,7 +118,8 @@ class ASplash extends Splash{
             }
             LGR.fine("Now getting archive list from AWS");
             Archives = vi.getArchives();
-            LGR.log(Level.INFO, "Number of archives = {0}", Archives.size());
+            LGR.log(Level.INFO, "Number of archives from this job= {0}",
+                    Archives == null ? 0 : Archives.size());
         }
         LGR.log(Level.INFO, "number of archives from AWS {0}",
                 Archives == null ? 0 : Archives.size());
