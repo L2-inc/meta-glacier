@@ -173,7 +173,7 @@ public class GlacierFrame extends MainFrame
         //Create and set up the window.
         super("Glacier", false);
         String savedRegion = P.get(REGION_KEY, "");
-        int savedGranularity = P.getInt(GRANULARITY_KEY, 0);
+        int savedGranularity = P.getInt(GRANULARITY_KEY, GRANULARITIES[0]);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Add content to the window.
