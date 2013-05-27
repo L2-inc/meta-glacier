@@ -92,7 +92,12 @@ public class Archive {
         aws_create_time = (String) m.get("CreationDate");
         sha256treehash = (String) m.get("SHA256TreeHash");
         fromAWSInventory = true;
-        size = (Long) m.get("Size");
+        try {
+            size = (Long) m.get("Size");
+        } catch (ClassCastException e){
+            LGR.log(Level.FINE, "Cannot cast {0} to long", m.get("Size"));
+            size = (Integer) m.get("Size");
+        }
     }    
     
     /** 

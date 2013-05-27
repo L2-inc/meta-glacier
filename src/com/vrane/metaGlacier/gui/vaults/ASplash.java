@@ -70,6 +70,8 @@ class ASplash extends Splash{
         for (final GlacierJobDescription j: jobs) {
             final String jobId = j.getJobId();
             GetJobOutputResult jor = null;
+            VaultInventory vi = null;
+            Date yesterday = new Date(System.currentTimeMillis() - 86400000);
             
             LGR.log(Level.FINE, "Getting data for {0}", jobId);
             try {
@@ -93,24 +95,34 @@ class ASplash extends Splash{
                         ++job_count);
                 continue;
             } // Else this might be the inventory job
-            VaultInventory vi = null;
+            LGR.log(Level.INFO, "parsing for job content-type {0}",
+                    jor.getContentType());
             try {
                 vi = new VaultInventory(jor, vaultName);
             } catch (Exception ex) {
                 LGR.log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Error getting vaults");
+                dispose();
+                LGR.log(Level.WARNING, "Job content type {0} job id {1}",
+                        new Object[]{jor.getContentType(), jobId});
+                JOptionPane.showMessageDialog(null, "Error getting archives");
                 return;
             }
             invDate = vi.getInventoryDate();
-            LGR.log(Level.FINE, "inventory date {0}", invDate);
+            LGR.log(Level.INFO, "inventory date {0}", invDate);
             if (invDate.compareTo(mostRecent) < 0) {
                 continue;
             }
             mostRecent = invDate;
+            if(invDate.compareTo(yesterday) < 0) {
+                LGR.info("inventory older than 24 hours");
+                continue;
+            }
             LGR.fine("Now getting archive list from AWS");
             Archives = vi.getArchives();
-            LGR.log(Level.FINE, "Number of archives {0}", Archives.size());
+            LGR.log(Level.INFO, "Number of archives = {0}", Archives.size());
         }
+        LGR.log(Level.INFO, "number of archives from AWS {0}",
+                Archives == null ? 0 : Archives.size());
         final boolean noAWSdata = jobs.isEmpty() || Archives == null;
         if (noAWSdata) {
             if (!GlacierFrame.haveMetadataProvider()) {

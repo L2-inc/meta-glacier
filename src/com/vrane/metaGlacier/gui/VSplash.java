@@ -35,6 +35,9 @@ class VSplash extends Splash{
         say("Getting vault list from AWS");
         final long beginning = System.currentTimeMillis();
         List<DescribeVaultOutput> list = null;
+        HashMap<String, String> lastCounts = new HashMap();
+        long afterMetadata = 0;
+        boolean success = false;        
         
         try {
             list = new AllVaults().list();
@@ -47,12 +50,10 @@ class VSplash extends Splash{
         }
         LGR.fine("Received vault list from AWS");
         final long afterAWS = System.currentTimeMillis();
-        long afterMetadata = 0;
-        boolean success = false;
-        
-        HashMap<String, String> lastCounts = new HashMap();
-        
-        if (list.size() > 0 && GlacierFrame.haveMetadataProvider()) {
+
+        if(!GlacierFrame.haveMetadataProvider()){
+            success = true;
+        } else if (list.size() > 0) {
             say("Syncing with metadata provider");
             VaultList vaultList = new VaultList(GlacierFrame.getAWSRegion());
             List<VaultRO> mvlList = new ArrayList();
@@ -70,6 +71,7 @@ class VSplash extends Splash{
             } catch (SDKException | APIException ex) {
                 LGR.log(Level.SEVERE, null, ex);
             }
+            dispose();
             if (!success) {
                 JOptionPane.showMessageDialog(this,
                         "Error from metadata provider");

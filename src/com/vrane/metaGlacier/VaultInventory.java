@@ -108,13 +108,21 @@ public class VaultInventory {
             return archives;
         }
         archives = new ArrayList<>();
-        final Iterator<JsonNode> j = jobDescNode.get("ArchiveList").getElements();
+        final Iterator<JsonNode> j
+                = jobDescNode.get("ArchiveList").getElements();
+
         LGR.finest("Now building archive list");
         while (j.hasNext()) {
             try {
+                LGR.log(Level.FINE,
+                        "json element {0}",
+                        mapper.readValue(j.next(), Map.class));
                 archives.add(new Archive(mapper.readValue(j.next(), Map.class))
                         .withVaultName(vaultName)
                         );
+            } catch (java.util.NoSuchElementException e) {
+                LGR.severe("bad inventory");
+                break;
             } catch (IOException ex) {
                 LGR.log(Level.SEVERE, null, ex);
                 break;
