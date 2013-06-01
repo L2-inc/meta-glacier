@@ -28,6 +28,7 @@ import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.BasicFile;
 import com.vrane.metaGlacierSDK.MArchive;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -376,7 +377,7 @@ public class Archive {
         try {
             mar.save(Main.frame.canSavePhotoMetadata());
             save_failed = false;
-        } catch (SDKException | APIException ex) {
+        } catch (SDKException | APIException | SignInException ex) {
             LGR.log(Level.SEVERE, null, ex);
         }
         if (save_failed) {
@@ -650,7 +651,7 @@ public class Archive {
         }
         try {
             return ma.markDeleted();
-        } catch (SDKException | APIException ex){
+        } catch (SDKException | APIException | SignInException ex){
             LGR.log(Level.SEVERE, null, ex);
         }
         deleteError = "Error in deleting from Metadata Provider";

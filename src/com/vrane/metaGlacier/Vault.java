@@ -24,6 +24,7 @@ import com.vrane.metaGlacier.gui.GlacierFrame;
 import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.MVault;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -176,7 +177,7 @@ public class Vault extends MVault{
                 return false;
             }
             success = true;
-        } catch (SDKException | APIException ex) {
+        } catch (SDKException | APIException | SignInException ex) {
             LGR.log(Level.SEVERE, null, ex);
         }
         if (!success) {
@@ -192,7 +193,7 @@ public class Vault extends MVault{
                 if (rid()) {
                     return true;
                 }
-            } catch (SDKException | APIException ex) {
+            } catch (SDKException | APIException | SignInException ex) {
                 LGR.log(Level.SEVERE, null, ex);
             }
         }

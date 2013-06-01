@@ -14,6 +14,7 @@ import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.ArchiveMetadata;
 import com.vrane.metaGlacierSDK.BasicFileMetadata;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -152,7 +153,7 @@ class ArchiveMetadataDialog extends JDialog{
                 boolean success = false;
                 try {
                     success = amd.rid();
-                } catch (SDKException | APIException ex) {
+                } catch (SDKException | APIException | SignInException ex) {
                     LGR.log(Level.SEVERE, null, ex);
                 }
                 if (success) {

@@ -14,6 +14,7 @@ import com.vrane.metaGlacier.gui.GlacierFrame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
@@ -72,6 +73,7 @@ class VaultInventoryJobDialog extends JDialog {
                             "Failed to create job.\nPlease check your input");
                     return;
                 }
+                LGR.log(Level.INFO, "job id is {0}", jobId);
                 P.put(SNS_TOPIC_KEY + GlacierFrame.getAWSRegion(), noWhiteSpace);
                 VaultInventoryJobDialog.this.dispose();
             }

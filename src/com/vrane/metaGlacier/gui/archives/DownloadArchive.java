@@ -15,6 +15,7 @@ import com.vrane.metaGlacier.gui.GlacierFrame;
 import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.MArchive;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +44,7 @@ class DownloadArchive{
             final Vault v = new Vault(arch.getVaultName());
             try {
                 fileName = new MArchive(v, arch.getArchiveId()).getFileName();
-            } catch (SDKException | APIException ex) {
+            } catch (SDKException | APIException | SignInException ex) {
                 LGR.log(Level.SEVERE, null, ex);
                 fileName = arch.getDescription();
             }

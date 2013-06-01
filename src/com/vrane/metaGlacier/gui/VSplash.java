@@ -15,6 +15,7 @@ import com.vrane.metaGlacier.gui.utilities.Splash;
 import com.vrane.metaGlacier.gui.vaults.VaultManageDialog;
 import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
+import com.vrane.metaGlacierSDK.SignInException;
 import com.vrane.metaGlacierSDK.VaultList;
 import com.vrane.metaGlacierSDK.VaultRO;
 import java.util.ArrayList;
@@ -64,17 +65,26 @@ class VSplash extends Splash{
                 mvlList.add(vro);
             }
             vaultList.setList(mvlList);
+            String error_string = null;
             try {
                 success = vaultList.sync();
                 afterMetadata = System.currentTimeMillis();
                 lastCounts = vaultList.getLastArchiveCounts();
+                if (!success) {
+                    LGR.info("failed to sync");
+                }
             } catch (SDKException | APIException ex) {
                 LGR.log(Level.SEVERE, null, ex);
+            } catch (SignInException ex){
+                LGR.log(Level.SEVERE, null, ex);
+                error_string = "Failed to sign-in to metadata account";
             }
             dispose();
             if (!success) {
-                JOptionPane.showMessageDialog(this,
-                        "Error from metadata provider");
+                if (error_string == null) {
+                    error_string = "Error from metadata provider";
+                }
+                JOptionPane.showMessageDialog(this, error_string);
             }
         }
         dispose();

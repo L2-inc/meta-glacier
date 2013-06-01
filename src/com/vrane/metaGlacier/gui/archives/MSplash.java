@@ -13,6 +13,7 @@ import com.vrane.metaGlacier.gui.utilities.Splash;
 import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.ArchiveMetadata;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ class MSplash extends Splash{
         boolean is_empty = true;
         try {
             is_empty = MAr.isEmpty();
-        } catch (SDKException | APIException e){
+        } catch (SDKException | APIException | SignInException e){
             LGR.log(Level.SEVERE, null, e);                
         }
         dispose();

@@ -16,6 +16,7 @@ import com.vrane.metaGlacierSDK.APIException;
 import com.vrane.metaGlacierSDK.SDKException;
 import com.vrane.metaGlacierSDK.MArchive;
 import com.vrane.metaGlacierSDK.Search;
+import com.vrane.metaGlacierSDK.SignInException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +41,7 @@ class SearchSplash extends Splash{
         try {
             archivesFromMetadataServer = search.search();
             metadataError = false;
-        } catch (SDKException e) {
+        } catch (SDKException | SignInException e) {
             LGR.log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(this,
                     "Error getting metadata.  Check your connection!");
