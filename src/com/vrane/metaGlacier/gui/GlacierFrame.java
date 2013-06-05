@@ -103,10 +103,10 @@ public class GlacierFrame extends MainFrame
                 = {"US West Oregon", "US West N California",
                     "US East N Virginia", "Ireland", "Tokyo"};
     private final static int[] GRANULARITIES
-            = { (int)HumanBytes.MEGA, 2 * (int) HumanBytes.MEGA};
+            = { 0, 8 * (int)HumanBytes.MEGA, 256 * (int) HumanBytes.MEGA};
     private final static String[] GRANULARITY_STRINGS
-            = { HumanBytes.convert(HumanBytes.MEGA),
-                    HumanBytes.convert(HumanBytes.MEGA * 2)};
+            = { "No multipart upload", HumanBytes.convert( 8 * HumanBytes.MEGA),
+                    HumanBytes.convert(HumanBytes.MEGA * 256)};
     private static SearchDialog search_dialog;
     
     private final JMenuItem SHOW_LOG_PANEL_MENU_ITEM
